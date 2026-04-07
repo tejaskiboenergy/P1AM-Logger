@@ -50,17 +50,20 @@
     }
 
     function handleLine(line) {
-      const parts = line.split(",");
-      if (parts.length !== 5) return;
-      const [elapsed, c1, c2, c3, c4] = parts;
-      const now = new Date().toISOString();
+  const parts = line.split(",");
+  if (parts.length !== 5) return;
+  const [elapsed, c1, c2, c3, c4] = parts;
+  
+  const now = new Date();
+  const date = now.toLocaleDateString("en-CA"); // YYYY-MM-DD format
+  const time = now.toLocaleTimeString("en-GB"); // 24hr HH:MM:SS format
 
-      const logDiv = document.getElementById("log");
-      logDiv.innerHTML += `${now} | t=${elapsed}s | CH1:${c1}°C CH2:${c2}°C CH3:${c3}°C CH4:${c4}°C<br>`;
-      logDiv.scrollTop = logDiv.scrollHeight;
+  const logDiv = document.getElementById("log");
+  logDiv.innerHTML += `${date} ${time} | t=${elapsed}s | CH1:${c1}°C CH2:${c2}°C CH3:${c3}°C CH4:${c4}°C<br>`;
+  logDiv.scrollTop = logDiv.scrollHeight;
 
-      if (logging) sendToSheets(now, elapsed, c1, c2, c3, c4);
-    }
+  if (logging) sendToSheets(date, time, elapsed, c1, c2, c3, c4);
+}
 
     function sendToSheets(datetime, elapsed, c1, c2, c3, c4) { const url = SCRIPT_URL + "?datetime=" + encodeURIComponent(datetime) + "&elapsed_s=" + encodeURIComponent(elapsed) + "&ch1=" + encodeURIComponent(c1) + "&ch2=" + encodeURIComponent(c2) + "&ch3=" + encodeURIComponent(c3) + "&ch4=" + encodeURIComponent(c4); fetch(url, { mode: "no-cors" }); document.getElementById("status").textContent = "Last sent: " + datetime; }
 
