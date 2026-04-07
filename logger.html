@@ -55,8 +55,12 @@
   const [elapsed, c1, c2, c3, c4] = parts;
   
   const now = new Date();
-  const date = now.toLocaleDateString("en-CA"); // YYYY-MM-DD format
-  const time = now.toLocaleTimeString("en-GB"); // 24hr HH:MM:SS format
+  const date = now.getFullYear() + "-" + 
+    String(now.getMonth()+1).padStart(2,"0") + "-" + 
+    String(now.getDate()).padStart(2,"0");
+  const time = String(now.getHours()).padStart(2,"0") + ":" + 
+    String(now.getMinutes()).padStart(2,"0") + ":" + 
+    String(now.getSeconds()).padStart(2,"0");
 
   const logDiv = document.getElementById("log");
   logDiv.innerHTML += `${date} ${time} | t=${elapsed}s | CH1:${c1}°C CH2:${c2}°C CH3:${c3}°C CH4:${c4}°C<br>`;
