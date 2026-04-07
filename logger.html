@@ -62,18 +62,7 @@
       if (logging) sendToSheets(now, elapsed, c1, c2, c3, c4);
     }
 
-    function sendToSheets(datetime, elapsed, c1, c2, c3, c4) {
-  const url = SCRIPT_URL +
-    "?datetime=" + encodeURIComponent(datetime) +
-    "&elapsed_s=" + encodeURIComponent(elapsed) +
-    "&ch1=" + encodeURIComponent(c1) +
-    "&ch2=" + encodeURIComponent(c2) +
-    "&ch3=" + encodeURIComponent(c3) +
-    "&ch4=" + encodeURIComponent(c4);
-
-  new Image().src = url;
-  document.getElementById("status").textContent = "Last sent: " + datetime;
-}
+    function sendToSheets(datetime, elapsed, c1, c2, c3, c4) { const url = SCRIPT_URL + "?datetime=" + encodeURIComponent(datetime) + "&elapsed_s=" + encodeURIComponent(elapsed) + "&ch1=" + encodeURIComponent(c1) + "&ch2=" + encodeURIComponent(c2) + "&ch3=" + encodeURIComponent(c3) + "&ch4=" + encodeURIComponent(c4); fetch(url, { mode: "no-cors" }); document.getElementById("status").textContent = "Last sent: " + datetime; }
 
     function startLogging() {
       logging = true;
