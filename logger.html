@@ -51,8 +51,8 @@
 
     function handleLine(line) {
       const parts = line.split(",");
-      if (parts.length !== 5) return;
-      const [elapsed, c1, c2, c3, c4] = parts;
+      if (parts.length !== 9) return; // 1 elapsed + 8 channels
+      const [elapsed, c1, c2, c3, c4, c5, c6, c7, c8] = parts;
 
       const now = new Date();
       const date = now.getFullYear() + "-" +
@@ -66,10 +66,10 @@
       logDiv.innerHTML += `${date} ${time} | t=${elapsed}s | CH1:${c1}°C CH2:${c2}°C CH3:${c3}°C CH4:${c4}°C<br>`;
       logDiv.scrollTop = logDiv.scrollHeight;
 
-      if (logging) sendToSheets(date, time, elapsed, c1, c2, c3, c4);
+      if (logging) sendToSheets(date, time, elapsed, c1, c2, c3, c4, c5, c6, c7, c8);
     }
 
-    function sendToSheets(date, time, elapsed, c1, c2, c3, c4) {
+    function sendToSheets(date, time, elapsed, c1, c2, c3, c4, c5, c6, c7, c8) {
       const url = SCRIPT_URL +
         "?date=" + encodeURIComponent(date) +
         "&time=" + encodeURIComponent(time) +
@@ -77,7 +77,12 @@
         "&ch1=" + encodeURIComponent(c1) +
         "&ch2=" + encodeURIComponent(c2) +
         "&ch3=" + encodeURIComponent(c3) +
-        "&ch4=" + encodeURIComponent(c4);
+        "&ch4=" + encodeURIComponent(c4) +
+        "&ch5=" + encodeURIComponent(c5) +
+        "&ch6=" + encodeURIComponent(c6) +
+        "&ch7=" + encodeURIComponent(c7) +
+        "&ch8=" + encodeURIComponent(c8);
+        
 
       fetch(url, { mode: "no-cors" });
       document.getElementById("status").textContent = "Last sent: " + date + " " + time;
